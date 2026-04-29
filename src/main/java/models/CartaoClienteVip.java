@@ -17,5 +17,3 @@ public class CartaoClienteVip extends CartaoCliente {
         return desconto;
     }
 }
-
-
