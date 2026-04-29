@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     // Bricks — UI library (inclui JavaFX internamente)
-    implementation 'com.github.fabiorodrigues0:bricks:latest.release'
+    implementation 'com.github.fabiorodrigues0:bricks:v0.5.3'
 
     // SQLite — base de dados local
     implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
@@ -55,16 +55,16 @@ checkstyle {
 }
 
 // Spotless - Formatação automática
-spotless {
-    java {
-        target 'src/**/*.java', 'database/**/*.java', 'config/database/**/*.java'
-        importOrder()
-        removeUnusedImports()
-        eclipse().configFile('config/formatter/eclipse-formatter.xml')
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}
+// spotless {
+//     java {
+//         target 'src/**/*.java', 'database/**/*.java', 'config/database/**/*.java'
+//         importOrder()
+//         removeUnusedImports()
+//         eclipse().configFile('config/formatter/eclipse-formatter.xml')
+//         trimTrailingWhitespace()
+//         endWithNewline()
+//     }
+// }
 
 // Formatar antes de compilar
 tasks.named('compileJava') {
