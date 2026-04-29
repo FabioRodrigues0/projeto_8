@@ -2,19 +2,19 @@ package models;
 
 public class CartaoCliente {
     private String titular;
-    private int numeroCartao;
+    private final String numeroCartao;
     private double pontos;
 
     public CartaoCliente() {
         this.titular = "";
-        this.numeroCartao = 0;
+        this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
         this.pontos = 0;
     }
 
-    public CartaoCliente(String titular, int numeroCartao) {
+    public CartaoCliente(String titular) {
         this.titular = titular;
-        this.numeroCartao = numeroCartao;
-        this.pontos = 0; // retirar os pontos
+        this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
+        this.pontos = 100; // retirar os pontos
     }
 
     public String getTitular() {
@@ -25,12 +25,8 @@ public class CartaoCliente {
         this.titular = titular;
     }
 
-    public int getNumeroCartao() {
+    public String getNumeroCartao() {
         return numeroCartao;
-    }
-
-    public void setNumeroCartao(int numeroCartao) {
-        this.numeroCartao = numeroCartao;
     }
 
     public double getPontos() {
@@ -68,5 +64,13 @@ public class CartaoCliente {
     }
     public void mostrarPontos() {
         System.out.println("Pontos disponíveis: " + getPontos());
+    }
+
+    private int gerarNum(){
+        int min = 0;
+        int max = 9999;
+        int range = max - min + 1;
+        
+        return (int)(Math.random() * range) + min;
     }
 }
