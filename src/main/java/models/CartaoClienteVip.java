@@ -8,9 +8,9 @@ public class CartaoClienteVip extends CartaoCliente {
         this.desconto = 0.1; // Desconto padrão (10%)
     }
 
-    public CartaoClienteVip(String titular, int numeroCartao, double desconto) {
-        super(titular, numeroCartao);
-        this.desconto = desconto;
+    public CartaoClienteVip(String titular) {
+        super(titular);
+        this.desconto = 0.1;
     }
 
     public double getDesconto() {
