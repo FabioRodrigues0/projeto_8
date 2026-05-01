@@ -1,7 +1,7 @@
 
 /**
- * Define o schema da base de dados. Chamado automaticamente no arranque via
- * Effect em App.java. Adiciona aqui as definições das tabelas.
+ * Define o schema da base de dados. Chamado automaticamente no arranque via Effect em
+ * App.java. Adiciona aqui as definições das tabelas.
  */
 public class DatabaseSchema {
 
@@ -9,8 +9,8 @@ public class DatabaseSchema {
     }
 
     /**
-     * Cria as tabelas se não existirem. Seguro para chamar múltiplas vezes — usa
-     * CREATE TABLE IF NOT EXISTS.
+     * Cria as tabelas se não existirem. Seguro para chamar múltiplas vezes — usa CREATE
+     * TABLE IF NOT EXISTS.
      */
     public static void create() {
         // Exemplo — descomenta e adapta:
@@ -20,4 +20,5 @@ public class DatabaseSchema {
         // .column("nome", "TEXT NOT NULL")
         // .execute();
     }
+
 }

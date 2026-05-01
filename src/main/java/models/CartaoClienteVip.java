@@ -1,6 +1,7 @@
 package models;
 
 public class CartaoClienteVip extends CartaoCliente {
+
     private final double desconto;
 
     public CartaoClienteVip() {
@@ -16,4 +17,5 @@ public class CartaoClienteVip extends CartaoCliente {
     public double getDesconto() {
         return desconto;
     }
+
 }

@@ -1,7 +1,7 @@
 
 /**
- * Dados iniciais da base de dados. Chamar DatabaseSeeder.run() no Effect initDB
- * do App.java se necessário. Só deve correr quando a base de dados está vazia.
+ * Dados iniciais da base de dados. Chamar DatabaseSeeder.run() no Effect initDB do
+ * App.java se necessário. Só deve correr quando a base de dados está vazia.
  */
 public class DatabaseSeeder {
 
@@ -21,4 +21,5 @@ public class DatabaseSeeder {
         // .values(Map.of("nome", "Valor inicial"))
         // .execute();
     }
+
 }

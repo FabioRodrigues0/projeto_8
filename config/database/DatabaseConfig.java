@@ -3,8 +3,8 @@ import fabiorodrigues.bricks.data.config.SQLiteConfig;
 
 /**
  * Configuração da ligação à base de dados. Por defeito usa SQLite — cria
- * ./data/database.db automaticamente. Para trocar de base de dados, descomenta
- * a configuração pretendida.
+ * ./data/database.db automaticamente. Para trocar de base de dados, descomenta a
+ * configuração pretendida.
  */
 public class DatabaseConfig {
 
@@ -29,4 +29,5 @@ public class DatabaseConfig {
         // .password("")
         // );
     }
+
 }
