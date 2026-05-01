@@ -6,8 +6,9 @@ plugins {
 }
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
+    maven {url 'https://jitpack.io'}
 }
 
 dependencies {
@@ -55,16 +56,17 @@ checkstyle {
 }
 
 // Spotless - Formatação automática
-// spotless {
-//     java {
-//         target 'src/**/*.java', 'database/**/*.java', 'config/database/**/*.java'
-//         importOrder()
-//         removeUnusedImports()
-//         eclipse().configFile('config/formatter/eclipse-formatter.xml')
-//         trimTrailingWhitespace()
-//         endWithNewline()
-//     }
-// }
+spotless {
+    java {
+        target 'src/**/*.java', 'database/**/*.java', 'config/database/**/*.java'
+        importOrder()
+        removeUnusedImports()
+        eclipse('4.26').configFile('config/formatter/eclipse-formatter.xml')
+        toggleOffOn()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
 
 // Formatar antes de compilar
 tasks.named('compileJava') {
