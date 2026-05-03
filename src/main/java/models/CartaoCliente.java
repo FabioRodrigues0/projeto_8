@@ -1,25 +1,44 @@
 package models;
 
+import java.util.Random;
+
 public class CartaoCliente {
 
+    private int id;
     private String titular;
     private final String numeroCartao;
     private double pontos;
+    private int id_cores;
+    private final CardGradient cores;
 
     public CartaoCliente() {
+        this.id = 0;
         this.titular = "";
         this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
         this.pontos = 0;
+        this.id_cores = 0;
+        this.cores = CardGradient.gradientForCard(new Random().nextInt(7));
     }
 
     public CartaoCliente(String titular) {
         this.titular = titular;
         this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
         this.pontos = 100; // retirar os pontos
+        this.id_cores = new Random().nextInt(7);
+        this.cores = CardGradient.gradientForCard(this.id_cores);
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitular() {
-        return titular;
+        return this.titular;
     }
 
     public void setTitular(String titular) {
@@ -27,20 +46,32 @@ public class CartaoCliente {
     }
 
     public String getNumeroCartao() {
-        return numeroCartao;
+        return this.numeroCartao;
     }
 
     public double getPontos() {
-        return pontos;
+        return this.pontos;
     }
 
     public void setPontos(double pontos) {
         this.pontos = pontos;
     }
 
+    public int getIdCores() {
+        return this.id_cores;
+    }
+
+    public void setIdCores(int id_cores) {
+        this.id_cores = id_cores;
+    }
+
+    public CardGradient getCores() {
+        return this.cores;
+    }
+
     @Override
     public String toString() {
-        return "CartaoCliente{" + "titular='" + titular + '\'' + ", numeroCartao=" + numeroCartao + ", pontos=" + pontos + '}';
+        return "" + titular;
     }
 
     public void debitarPontos(double pontos) {
@@ -78,4 +109,6 @@ public class CartaoCliente {
 
         return (int) (Math.random() * range) + min;
     }
+
+
 }
