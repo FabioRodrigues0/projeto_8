@@ -1,31 +1,47 @@
 package models;
 
-import java.util.Random;
 
 public class CartaoCliente {
 
     private int id;
     private String titular;
-    private final String numeroCartao;
+    private String numeroCartao;
     private double pontos;
-    private int id_cores;
-    private final CardGradient cores;
+    private int idCores;
+    private CardGradient cores;
 
     public CartaoCliente() {
         this.id = 0;
         this.titular = "";
         this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
         this.pontos = 0;
-        this.id_cores = 0;
-        this.cores = CardGradient.gradientForCard(new Random().nextInt(7));
+        this.idCores = gerarIdCores();
+        this.cores = CardGradient.gradientForCard(this.idCores);
     }
+
 
     public CartaoCliente(String titular) {
         this.titular = titular;
-        this.numeroCartao = String.format("%d-%d-%d-%d", gerarNum(), gerarNum(), gerarNum(), gerarNum());
+        this.numeroCartao = String
+            .format(
+                "%d-%d-%d-%d",
+                gerarNum(),
+                gerarNum(),
+                gerarNum(),
+                gerarNum()
+            );
         this.pontos = 100; // retirar os pontos
-        this.id_cores = new Random().nextInt(7);
-        this.cores = CardGradient.gradientForCard(this.id_cores);
+        this.idCores = gerarIdCores();
+        this.cores = CardGradient.gradientForCard(this.idCores);
+    }
+
+    public CartaoCliente(int id, String titular, String numeroCartao, double pontos, int idCores) {
+        this.id = id;
+        this.titular = titular == null ? "" : titular;
+        this.numeroCartao = numeroCartao;
+        this.pontos = pontos; // retirar os pontos
+        this.idCores = idCores;
+        this.cores = CardGradient.gradientForCard(this.idCores);
     }
 
 
@@ -49,6 +65,10 @@ public class CartaoCliente {
         return this.numeroCartao;
     }
 
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
     public double getPontos() {
         return this.pontos;
     }
@@ -58,11 +78,12 @@ public class CartaoCliente {
     }
 
     public int getIdCores() {
-        return this.id_cores;
+        return this.idCores;
     }
 
-    public void setIdCores(int id_cores) {
-        this.id_cores = id_cores;
+    public void setIdCores(int idCores) {
+        this.idCores = idCores;
+        this.cores = CardGradient.gradientForCard(this.idCores);
     }
 
     public CardGradient getCores() {
@@ -73,6 +94,12 @@ public class CartaoCliente {
     public String toString() {
         return "" + titular;
     }
+
+
+    // @Override
+    // public String toString() {
+    //     return "CartaoCliente{"+ "id=" + id + ", titular='" + titular + '\'' + ", numeroCartao=" + numeroCartao + ", pontos=" + pontos + '}';
+    // }
 
     public void debitarPontos(double pontos) {
         if (this.pontos >= pontos) { // Verifica se há pontos suficientes para debitar
@@ -100,6 +127,14 @@ public class CartaoCliente {
 
     public void mostrarPontos() {
         System.out.println("Pontos disponíveis: " + getPontos());
+    }
+
+    private int gerarIdCores() {
+        int min = 0;
+        int max = 7;
+        int range = max - min + 1;
+
+        return (int) (Math.random() * range) + min;
     }
 
     private int gerarNum() {

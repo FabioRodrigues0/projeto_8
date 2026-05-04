@@ -33,6 +33,7 @@ public class HomeView extends BricksScene {
         use(vm);
         this.vm = vm;
         this.app = app;
+        vm.getCartoes();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class HomeView extends BricksScene {
                 new LazyColumn<CartaoCliente>()
                     .gap(12)
                     .padding(16)
-                    .modifier(new Modifier().fillMaxHeight())
+                    .modifier(new Modifier().fillMaxHeight().fillMaxWidth())
                     .items(vm.listaCartoes.get())
                     .emptyState(new Text("Nenhuma nota."))
                     .item(cartao -> {
@@ -116,20 +117,43 @@ public class HomeView extends BricksScene {
                                                                 cartao.getCores().isDark() ? Color.WHITE : Color.BLACK
                                                             )
                                                     ),
-                                                cartao.getTitular().equals("") ? new Row()
-                                                    .gap(8)
-                                                    .children(
-                                                        new TextField()
-                                                            .bindTo(
-                                                                vm.novoTitular
-                                                            ),
-                                                        new Button("adicionar")
-                                                            .onClick(
-                                                                () -> {
-                                                                    // vm.updateTitutar(id, novoTitular)
-                                                                }
+                                                // Em vez do ternário atual
+                                                cartao.getTitular().isEmpty() ? (vm.cartaoEditandoId.get() == cartao
+                                                    .getId()
+                                                        // A editar — mostra TextField + botões
+                                                        ? new Row()
+                                                            .gap(8)
+                                                            .children(
+                                                                new TextField()
+                                                                    .placeholder("Nome do titular")
+                                                                    .bindTo(vm.novoTitular),
+                                                                new IconButton("fas-check")
+                                                                    .color(Color.WHITE)
+                                                                    .size(20)
+                                                                    .onClick(() -> {
+                                                                        vm.updateTitular(cartao.getId());
+                                                                        vm.cartaoEditandoId.set(-1);
+                                                                    }),
+                                                                new IconButton("fas-times")
+                                                                    .color(Color.WHITE)
+                                                                    .onClick(() -> {
+                                                                        vm.novoTitular.set("");
+                                                                        vm.cartaoEditandoId.set(-1);
+                                                                    })
                                                             )
-                                                    ) : new Text(cartao.getTitular())
+                                                        // Não editar — mostra botão de editar
+                                                        : new IconButton("fas-user-plus")
+                                                            .color(Color.WHITE)
+                                                            .size(12)
+                                                            .modifier(
+                                                                new Modifier()
+                                                                    .width(30)
+                                                                    .height(30)
+                                                            )
+                                                            .tooltip("Adicionar titular")
+                                                            .onClick(() -> vm.cartaoEditandoId.set(cartao.getId())))
+                                                    // Tem titular — mostra o nome
+                                                    : new Text(cartao.getTitular())
                                                         .modifier(
                                                             new Modifier()
                                                                 .textColor(
@@ -143,10 +167,12 @@ public class HomeView extends BricksScene {
                                             )
                                     ),
                                 new Column()
-                                    .gap(8)
+                                    .gap(2)
                                     .children(
                                         new Text("Pontos:"),
-                                        new Text(String.valueOf(cartao.getPontos())).fontSize(50),
+                                        new Text(String.valueOf(cartao.getPontos()))
+                                            .modifier(new Modifier().padding(0, 5))
+                                            .fontSize(50),
                                         new Divider(),
                                         new Row()
                                             .gap(8)
@@ -184,7 +210,8 @@ public class HomeView extends BricksScene {
                                                                     )
                                                                     .color(Color.WHITE)
                                                                     .onClick(() -> {
-                                                                        // vm.debitar(id, valor)
+                                                                        vm.debitar(cartao.getId());
+                                                                        vm.valorDebitar.set("");
                                                                     })
                                                             )
                                                     ),
