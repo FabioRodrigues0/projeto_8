@@ -8,26 +8,26 @@ import fabiorodrigues.bricks.data.config.SQLiteConfig;
  */
 public class DatabaseConfig {
 
-    static {
-        // SQLite (padrão) — sem configuração necessária
-        DB.configure(new SQLiteConfig());
+  static {
+    // SQLite (padrão) — sem configuração necessária
+    DB.configure(new SQLiteConfig());
 
-        // MySQL — descomentar e preencher credenciais
-        // DB.configure(new MySQLConfig()
-        // .host("localhost")
-        // .port(3306)
-        // .database("nome_db")
-        // .user("root")
-        // .password("")
-        // );
+    // MySQL — descomentar e preencher credenciais
+    // DB.configure(new MySQLConfig()
+    // .host("localhost")
+    // .port(3306)
+    // .database("nome_db")
+    // .user("root")
+    // .password("")
+    // );
 
-        // PostgreSQL — descomentar e preencher credenciais
-        // DB.configure(new PostgreSQLConfig()
-        // .host("localhost")
-        // .database("nome_db")
-        // .user("postgres")
-        // .password("")
-        // );
-    }
+    // PostgreSQL — descomentar e preencher credenciais
+    // DB.configure(new PostgreSQLConfig()
+    // .host("localhost")
+    // .database("nome_db")
+    // .user("postgres")
+    // .password("")
+    // );
+  }
 
 }

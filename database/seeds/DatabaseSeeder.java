@@ -5,21 +5,21 @@
  */
 public class DatabaseSeeder {
 
-    private DatabaseSeeder() {
-    }
+  private DatabaseSeeder() {
+  }
 
-    /**
-     * Insere dados iniciais nas tabelas. Exemplo de uso no App.java:
-     *
-     * private final Effect initDB = effect(() -> { DatabaseSchema.create();
-     * DatabaseSeeder.run(); });
-     */
-    public static void run() {
-        // Exemplo — descomenta e adapta:
-        // DB.query()
-        // .insertInto("exemplo")
-        // .values(Map.of("nome", "Valor inicial"))
-        // .execute();
-    }
+  /**
+   * Insere dados iniciais nas tabelas. Exemplo de uso no App.java:
+   *
+   * private final Effect initDB = effect(() -> { DatabaseSchema.create();
+   * DatabaseSeeder.run(); });
+   */
+  public static void run() {
+    // Exemplo — descomenta e adapta:
+    // DB.query()
+    // .insertInto("exemplo")
+    // .values(Map.of("nome", "Valor inicial"))
+    // .execute();
+  }
 
 }
