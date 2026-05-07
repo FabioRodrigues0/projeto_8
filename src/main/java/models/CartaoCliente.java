@@ -10,6 +10,7 @@ public class CartaoCliente {
   private double pontos;
   private int idCores;
   private CardGradient cores;
+  private final Double desconto;
 
   public CartaoCliente() {
     this.id = 0;
@@ -18,6 +19,7 @@ public class CartaoCliente {
     this.pontos = 0;
     this.idCores = gerarIdCores();
     this.cores = CardGradient.gradientForCard(this.idCores);
+    this.desconto = null;
   }
 
 
@@ -34,6 +36,7 @@ public class CartaoCliente {
     this.pontos = 100; // retirar os pontos
     this.idCores = gerarIdCores();
     this.cores = CardGradient.gradientForCard(this.idCores);
+    this.desconto = null;
   }
 
   public CartaoCliente(int id, String titular, String numeroCartao, double pontos, int idCores) {
@@ -43,6 +46,7 @@ public class CartaoCliente {
     this.pontos = pontos; // retirar os pontos
     this.idCores = idCores;
     this.cores = CardGradient.gradientForCard(this.idCores);
+    this.desconto = null;
   }
 
 
@@ -87,20 +91,24 @@ public class CartaoCliente {
     this.cores = CardGradient.gradientForCard(this.idCores);
   }
 
+  public Double getDesconto() {
+    return this.desconto;
+  }
+
   public CardGradient getCores() {
     return this.cores;
   }
 
-  @Override
-  public String toString() {
-    return "" + titular;
-  }
-
-
   // @Override
   // public String toString() {
-  //     return "CartaoCliente{"+ "id=" + id + ", titular='" + titular + '\'' + ", numeroCartao=" + numeroCartao + ", pontos=" + pontos + '}';
+  //   return "" + titular;
   // }
+
+
+  @Override
+  public String toString() {
+    return "CartaoCliente{" + "id=" + id + ", titular='" + titular + '\'' + ", numeroCartao=" + numeroCartao + ", pontos=" + pontos + ", desconto" + desconto + '}';
+  }
 
   public void debitarPontos(double pontos) {
     double taxa = 0.02; // 2% de taxa
@@ -115,25 +123,17 @@ public class CartaoCliente {
     }
   }
 
-  public void transferirPontos(CartaoCliente destinatario) {
-    double taxa = 0.02;
-    double totalComTaxa = this.pontos - (this.pontos * taxa);
-
-    DecimalFormat formato = new DecimalFormat("#.##");
-
-    this.setPontos(0);
-    destinatario.setPontos(destinatario.getPontos() + Double.valueOf(formato.format(totalComTaxa)));
+  
+  private double round2(double value) {
+    return Math.round(value * 100.0) / 100.0;
   }
-
   public void transferirPontos(CartaoCliente destinatario, double pontos) {
     double taxa = 0.02;
-    double totalComTaxa = pontos + (pontos * taxa);
-
-    DecimalFormat formato = new DecimalFormat("#.##");
+    double totalComTaxa = pontos * (1 + taxa);
 
     if (this.pontos >= totalComTaxa) {
       double novosPontos = this.pontos - totalComTaxa;
-      this.setPontos(Double.valueOf(formato.format(novosPontos)));
+      this.setPontos(round2(novosPontos));
       destinatario.setPontos(destinatario.getPontos() + pontos);
     } else {
       System.out.println("Não há pontos suficientes no cartão original para transferência.");

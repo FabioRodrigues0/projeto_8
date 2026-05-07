@@ -2,6 +2,7 @@ package views;
 
 import fabiorodrigues.bricks.components.Button;
 import fabiorodrigues.bricks.components.Card;
+import fabiorodrigues.bricks.components.Checkbox;
 import fabiorodrigues.bricks.components.Column;
 import fabiorodrigues.bricks.components.Divider;
 import fabiorodrigues.bricks.components.Dropdown;
@@ -59,6 +60,7 @@ public class HomeView extends BricksScene {
                 .children(
                   new Text("Adicionar Cartão").fontSize(18),
                   new TextField().label("Titular:").bindTo(vm.titular),
+                  new Checkbox("VIP").bindTo(vm.isVip),
                   new Row()
                     .gap(8)
                     .children(

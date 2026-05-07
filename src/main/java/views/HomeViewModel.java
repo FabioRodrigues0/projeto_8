@@ -7,6 +7,7 @@ import fabiorodrigues.bricks.data.DB;
 import java.util.List;
 import java.util.Map;
 import models.CartaoCliente;
+import models.CartaoClienteVip;
 
 public class HomeViewModel extends BricksViewModel {
 
@@ -20,36 +21,50 @@ public class HomeViewModel extends BricksViewModel {
   protected final State<String> valorTransferir = state("");
   protected final State<Integer> cartaoEditandoId = state(-1);
   protected final State<Integer> cartaoAtivoId = state(-1);
+  protected final State<Boolean> isVip = state(false);
 
   private List<CartaoCliente> queryCartoes() {
     return DB
       .query()
       .select("id", "titular", "numero_cartao", "pontos", "id_cores")
       .from("cartao_client")
+      .where("desconto", "IS NULL", null)
       .orderBy("id", "ASC")
       .execute(CartaoCliente.class);
   }
 
+  private List<CartaoClienteVip> queryCartoesVip() {
+    return DB
+      .query()
+      .select("id", "titular", "numero_cartao", "pontos", "id_cores", "desconto")
+      .from("cartao_client")
+      .where("desconto", "IS NOT NULL", null)
+      .orderBy("id", "ASC")
+      .execute(CartaoClienteVip.class);
+  }
+
   public void getCartoes() {
     List<CartaoCliente> lista = queryCartoes();
+    List<CartaoClienteVip> listaVip = queryCartoesVip();
     listaCartoes.clear();
     listaCartoes.addAll(lista);
+    listaVip.forEach(listaCartoes::add);
   }
 
   public void getCartoesDropdown() {
     List<CartaoCliente> lista = queryCartoes();
+    List<CartaoClienteVip> listaVip = queryCartoesVip();
     listaCartoesDropdown.clear();
     listaCartoesDropdown.add(new CartaoCliente());
     listaCartoesDropdown.addAll(lista);
+    listaVip.forEach(listaCartoesDropdown::add);
   }
 
   public void criarCartao() {
     CartaoCliente cliente;
 
     if (titular.get().equals("")) {
-      cliente = new CartaoCliente();
-
-      System.out.print("idCore:" + cliente.getIdCores());
+      cliente = isVip.get() ? new CartaoClienteVip() : new CartaoCliente();
 
       DB
         .query()
@@ -57,9 +72,10 @@ public class HomeViewModel extends BricksViewModel {
         .value("numero_cartao", cliente.getNumeroCartao())
         .value("pontos", cliente.getPontos())
         .value("id_cores", cliente.getIdCores())
+        .when(isVip.get(), q -> q.value("desconto", ((CartaoClienteVip) cliente).getDesconto()))
         .execute();
     } else {
-      cliente = new CartaoCliente(titular.get());
+      cliente = isVip.get() ? new CartaoClienteVip(titular.get()) : new CartaoCliente(titular.get());
 
       DB
         .query()
@@ -68,6 +84,7 @@ public class HomeViewModel extends BricksViewModel {
         .value("numero_cartao", cliente.getNumeroCartao())
         .value("pontos", cliente.getPontos())
         .value("id_cores", cliente.getIdCores())
+        .when(isVip.get(), q -> q.value("desconto", ((CartaoClienteVip) cliente).getDesconto()))
         .execute();
     }
     listaCartoes.add(cliente);
@@ -107,13 +124,6 @@ public class HomeViewModel extends BricksViewModel {
   }
 
   public void transferir(int id) {
-    CartaoCliente cartao = listaCartoes
-      .get()
-      .stream()
-      .filter(c -> c.getId() == id)
-      .findFirst()
-      .orElse(null);
-
     CartaoCliente destino = listaCartoes
       .get()
       .stream()
@@ -121,7 +131,19 @@ public class HomeViewModel extends BricksViewModel {
       .findFirst()
       .orElse(null);
 
+    CartaoCliente cartao = listaCartoes
+      .get()
+      .stream()
+      .filter(c -> c.getId() == id)
+      .findFirst()
+      .orElse(null);
+
+    System.out.print(cartao);
+
     cartao.transferirPontos(destino, Double.parseDouble(valorTransferir.get()));
+
+    System.out.println(cartao);
+    System.out.println(destino);
 
     DB
       .query()
