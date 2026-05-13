@@ -1,4 +1,3 @@
-
 import fabiorodrigues.bricks.data.DB;
 
 /**
@@ -24,7 +23,7 @@ public class DatabaseSchema {
       .column("numero_cartao", "TEXT NOT NULL UNIQUE")
       .column("pontos", "FLOAT NOT NULL")
       .column("id_cores", "INTEGER NOT NULL")
+      .column("desconto", "FLOAT")
       .execute();
   }
-
 }

@@ -123,10 +123,11 @@ public class CartaoCliente {
     }
   }
 
-  
+
   private double round2(double value) {
     return Math.round(value * 100.0) / 100.0;
   }
+
   public void transferirPontos(CartaoCliente destinatario, double pontos) {
     double taxa = 0.02;
     double totalComTaxa = pontos * (1 + taxa);
