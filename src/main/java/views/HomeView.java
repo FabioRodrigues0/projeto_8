@@ -1,5 +1,6 @@
 package views;
 
+import fabiorodrigues.bricks.components.Alert;
 import fabiorodrigues.bricks.components.Button;
 import fabiorodrigues.bricks.components.Card;
 import fabiorodrigues.bricks.components.Checkbox;
@@ -9,7 +10,6 @@ import fabiorodrigues.bricks.components.Dropdown;
 import fabiorodrigues.bricks.components.IconButton;
 import fabiorodrigues.bricks.components.Image;
 import fabiorodrigues.bricks.components.LazyColumn;
-import fabiorodrigues.bricks.components.Alert;
 import fabiorodrigues.bricks.components.Modal;
 import fabiorodrigues.bricks.components.Row;
 import fabiorodrigues.bricks.components.Spacer;
@@ -71,15 +71,15 @@ public class HomeView extends BricksScene {
                       }),
                       new Button("Criar").onClick(() -> {
                         try {
-                            vm.criarCartao();
-                            vm.titular.set("");
-                            modal.close();
+                          vm.criarCartao();
+                          vm.titular.set("");
+                          modal.close();
                         } catch (RuntimeException e) {
-                            if (e.getMessage() != null && e.getMessage().contains("UNIQUE")) {
-                                Alert.error("Erro", "Já existe um cartão com esse número.");
-                            } else {
-                                Alert.error("Erro", "Não foi possível criar o cartão.");
-                            }
+                          if (e.getMessage() != null && e.getMessage().contains("UNIQUE")) {
+                            Alert.error("Erro", "Já existe um cartão com esse número.");
+                          } else {
+                            Alert.error("Erro", "Não foi possível criar o cartão.");
+                          }
                         }
                       })
                     )
