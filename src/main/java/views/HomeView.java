@@ -27,7 +27,7 @@ public class HomeView extends BricksScene {
 
   private final HomeViewModel vm;
   private final BricksApplication app;
-  private final State<String> titulo = state("Olá, Bricks!");
+  private final State<String> titulo = state("Bem vindo ao Cartão Cliente!");
 
   public HomeView(BricksApplication app, HomeViewModel vm) {
     super(app);
